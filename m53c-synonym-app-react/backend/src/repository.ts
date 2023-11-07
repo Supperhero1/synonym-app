@@ -2,6 +2,9 @@ import store from "./store";
 
 export const synonymRepository = {
     add: (firstWord: string, secondWord: string) => {
+        if(firstWord.includes(' ') || secondWord.includes(' ')) {
+            throw new Error('single words only')
+        }
         const firstWordSynonyms = store.get(firstWord)
 
         if(firstWordSynonyms && firstWordSynonyms.has(secondWord)) {
