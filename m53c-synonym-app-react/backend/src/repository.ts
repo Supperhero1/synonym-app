@@ -12,15 +12,29 @@ export const synonymRepository = {
                 throw new Error('This synonym pair was already added')
         }
         const secondWordSynonyms = store.get(secondWord)
-        const currentSynonymSet = firstWordSynonyms || secondWordSynonyms || []
-        // this ends up doing exactly what we want regardless of which word already has synonyms defined and which doesn't
-        // they will both me merged after this and have a reference to the same object in memory, ensuring the
-        // transitive property
-        let newSynonymSet = new Set([...currentSynonymSet, firstWord, secondWord])
-        store.set(firstWord, newSynonymSet)
-        store.set(secondWord, newSynonymSet)
+        const fullSetOfSynonyms = new Set([
+            ...Array.from(firstWordSynonyms || []),
+            ...Array.from(secondWordSynonyms || []),
+            firstWord,
+            secondWord
+        ])
+
+        for(const word of fullSetOfSynonyms) {
+            store.set(word, fullSetOfSynonyms)
+        }
+
+        return fullSetOfSynonyms
     },
     get: (word: string) => {
         return store.get(word)
+    },
+    remove: (word: string) => {
+        const currentSynonyms = store.get(word)
+        if(!currentSynonyms) {
+            throw new Error(`Can't delete the word: ${word} from the synonym database because it wasn't found there`)
+        }
+        // all words share a reference to the same object in memory, so we don't have to iterate over all of them
+        currentSynonyms.delete(word)
+        store.set(word, undefined)
     }
 }

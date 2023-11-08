@@ -1,0 +1,42 @@
+.synonymListItem {
+  margin: 0.3rem;
+  color: white;
+  background: cadetblue;
+  padding: 0.3rem 0.5rem;
+  border-radius: 5px;
+  position: relative;
+  .deleteButton {
+    pointer-events: none;
+    padding: 0.6rem 0.6rem;
+    width: 0;
+    border: 2px solid black;
+    z-index: 2;
+    background-color: white;
+    border-radius: 1.2rem;
+    position: absolute;
+    top: -0.6rem;
+    right: -0.6rem;
+    color: red;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 0;
+    visibility: hidden;
+    &:hover {
+      visibility: visible;
+      pointer-events: all;
+      background-color: red;
+      color: white;
+    }
+    .deleteIcon {
+      height: 0.8rem;
+    }
+  }
+  &:hover {
+    .deleteButton {
+      visibility: visible;
+      pointer-events: all;
+    }
+  }
+}

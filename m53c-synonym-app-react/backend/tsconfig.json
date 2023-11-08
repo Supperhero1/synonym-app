@@ -5,6 +5,7 @@
     "esModuleInterop": true,
     "moduleResolution": "node",
     "sourceMap": true,
+    "resolveJsonModule": true,
     "outDir": "dist",
     "allowJs": true,
     "lib": ["dom", "es6"],
@@ -21,8 +22,10 @@
   ],
   "include": [
     "src/**/*.ts",
+    "integrationTests/**/*.ts"
   ],
   "files": [
-    "src/index.ts"
+    "src/index.ts",
+    "global.d.ts"
   ]
 }

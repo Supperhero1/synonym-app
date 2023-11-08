@@ -1,3 +1,4 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+# disallow everything, don't want this site to be indexed
+Disallow: /

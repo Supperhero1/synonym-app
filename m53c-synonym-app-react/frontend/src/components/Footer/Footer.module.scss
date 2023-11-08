@@ -1,0 +1,25 @@
+.footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding: 0.2rem 0.2rem 0.2rem 10rem;
+  color: white;
+  background: linear-gradient(to right, white, darkslateblue 50%, darkslateblue);
+  cursor: pointer;
+  .tooltip {
+    position: absolute;
+    visibility: hidden;
+    bottom: 2rem;
+    right: 2rem;
+    background: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    color: black;
+    padding: 1rem
+  }
+  &:hover {
+    .tooltip {
+      visibility: visible;
+    }
+  }
+}

@@ -9,6 +9,8 @@
     "@typescript-eslint"
   ],
   "rules": {
-    "indent": ["error", 4]
+    "indent": ["error", 4],
+    "object-curly-spacing": ["error", "always"],
+    "array-bracket-spacing": ["error", "always"]
   }
 }
