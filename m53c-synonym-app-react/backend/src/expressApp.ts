@@ -18,7 +18,7 @@ app.use(cors({
     }
 }))
 
-app.get('/synonyms', (req, res) => {
+app.get('/api/synonyms', (req, res) => {
     const word = req.query.word
     if(!word) {
         res.status(400)
@@ -29,7 +29,7 @@ app.get('/synonyms', (req, res) => {
     res.send(JSON.stringify(value ? Array.from(value) : null))
 })
 
-app.post('/synonyms', express.json(),(req, res) => {
+app.post('/api/synonyms', express.json(),(req, res) => {
     const payload = req.body as { originalWord: string, synonym: string }
     // TODO: validate structure
     try {
@@ -42,7 +42,7 @@ app.post('/synonyms', express.json(),(req, res) => {
     }
 })
 
-app.delete('/synonyms', (req, res) => {
+app.delete('/api/synonyms', (req, res) => {
     const word = req.query.word
     if(!word) {
         res.status(400)

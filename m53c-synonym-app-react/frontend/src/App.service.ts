@@ -1,5 +1,7 @@
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
 
+const SERVER_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : 'https://marko-petric.com'
+
 export const useApp = () => {
     const [ data, setData ] = useState<string[]>([])
     const [ wordToCheck, setWordToCheck ] = useState<string>('')
@@ -9,7 +11,7 @@ export const useApp = () => {
     const fetchData = useCallback(async () => {
         if(wordToCheck) {
             try{
-                const result = await fetch(`http://localhost:3001/synonyms?word=${wordToCheck}`)
+                const result = await fetch(`${SERVER_URL}/api/synonyms?word=${wordToCheck}`)
                 const parsedResult = await result.json()
                 setData(parsedResult || [])
                 setWordToDisplay(wordToCheck)
@@ -28,7 +30,7 @@ export const useApp = () => {
             })
 
             if(synonym) {
-                await fetch('http://localhost:3001/synonyms', {
+                await fetch(`${SERVER_URL}/api/synonyms`, {
                     body,
                     method: 'POST',
                     headers: new Headers({ 'content-type': 'application/json' }),
@@ -43,7 +45,7 @@ export const useApp = () => {
     }, [ synonym, wordToCheck, fetchData ])
     const deleteHandler = useCallback(async (wordToCheck: string) => {
         try {
-            const response = await fetch(`http://localhost:3001/synonyms?word=${wordToCheck}`, { method: 'DELETE' })
+            const response = await fetch(`${SERVER_URL}/api/synonyms?word=${wordToCheck}`, { method: 'DELETE' })
             if(response.status !== 200) {
                 setError('An error has occurred while attempting to delete a synonym. Please try again later.')
                 return
