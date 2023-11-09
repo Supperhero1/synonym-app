@@ -8,7 +8,7 @@ export default function (body: any): asserts body is { originalWord: string, syn
         || typeof body.originalWord !== 'string'
         || typeof body.synonym !== 'string'
     ) {
-        throw new Error('Malformed request. Request body needs to conform to the signature: { originalWord: string, synonym: string }')
+        throw new Error('Malformed request. The request needs to contain both the original word and the synonym.')
     }
     const { originalWord, synonym } = body
     if(originalWord.includes(' ') || synonym.includes(' ')) {

@@ -55,6 +55,10 @@ Currently, everything is in-memory. One thing that should definitely be done if 
 
 ### Frontend
 
+* **Custom errors**
+
+Currently, we're forwarding backend error messages to the user. We could implement better error handling by associating unique codes with errors and using those codes to render more user-friendly error messages.
+
 * **Logging**
 
 Currently, we have no way to know what errors are happening on the user side. We might set up a reporting method (see observability bullet point) that will give us insight into any problems the users might be running into.
