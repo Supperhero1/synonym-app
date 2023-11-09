@@ -12,6 +12,8 @@ The server will be available at `http://localhost:3001` and the website will be 
 
 Both apps are hosted on my website which runs on a digital ocean droplet. That's basically a cheaper EC2 instance with a middleman. The frontend app is served directly, the backend app is running via PM2 to ensure recovery on server restart. Logs for the backend process are available on the server through PM2. Hosting is configured via Nginx.
 
+I've intentionally decided to allow numbers in the input. This is easily changed, but I figured I'd allow 'three' to be a synonym for 3 or 'l33t' a synonym for 'leet'. I'm pointing this out because this is not STRICTLY in line with requirements which only mention words, so I wanted to avoid any confusion about it being intentional or a bug.
+
 The task description mentions the following things:
 
 * user-friendly
