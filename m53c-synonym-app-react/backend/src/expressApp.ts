@@ -31,7 +31,7 @@ app.get('/api/synonyms', (req, res) => {
 
         try {
             const value = synonymRepository.get(word)
-            res.send(JSON.stringify(value ? Array.from(value) : null))
+            res.send(JSON.stringify(value || null))
         } catch (error) {
             console.error(`Error fetching synonym: ${error.stack || error}`)
             res.status(500).send(`Internal server error: ${error.message}`)

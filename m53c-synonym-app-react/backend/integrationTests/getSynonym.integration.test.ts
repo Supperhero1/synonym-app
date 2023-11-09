@@ -42,7 +42,7 @@ describe('server should correctly handle queries for synonyms', () => {
 
         const parsedResponse = await response.json()
 
-        expect(parsedResponse).toBeArrayOfSize(4)
-        expect(parsedResponse).toStrictEqual(expect.arrayContaining(wordsToTest))
+        expect(parsedResponse).toBeArrayOfSize(3)
+        expect(parsedResponse).toStrictEqual(expect.arrayContaining([wordsToTest[1], wordsToTest[2], wordsToTest[3]]))
     })
 })

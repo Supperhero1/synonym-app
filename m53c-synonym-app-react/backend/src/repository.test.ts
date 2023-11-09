@@ -74,24 +74,21 @@ describe('Test CRUD operations', () => {
             synonymRepository.get(words[6])
         ]
 
-        expect(results[0]).toBeInstanceOf(Set)
-        expect(results[1]).toBeInstanceOf(Set)
-        expect(results[2]).toBeInstanceOf(Set)
+        console.log('===results===', results)
+
+        expect(results[0]).toBeArrayOfSize(4)
+        expect(results[1]).toBeArrayOfSize(4)
+        expect(results[2]).toBeArrayOfSize(1)
         expect(results[3]).toBeUndefined()
 
-        expect(results[0].size).toStrictEqual(5)
-        expect(Array.from(results[0])).toStrictEqual(expect.arrayContaining([
-            words[0], words[1], words[2], words[4], words[7]
+        expect(results[0]).toStrictEqual(expect.arrayContaining([
+            words[1], words[2], words[4], words[7]
         ]))
-
-        expect(results[1].size).toStrictEqual(5)
-        expect(Array.from(results[1])).toStrictEqual(expect.arrayContaining([
-            words[0], words[1], words[2], words[4], words[7]
+        expect(results[1]).toStrictEqual(expect.arrayContaining([
+            words[0], words[1], words[4], words[7]
         ]))
-
-        expect(results[2].size).toStrictEqual(2)
-        expect(Array.from(results[2])).toStrictEqual(expect.arrayContaining([
-            words[3], words[5]
+        expect(results[2]).toStrictEqual(expect.arrayContaining([
+            words[5]
         ]))
     })
 

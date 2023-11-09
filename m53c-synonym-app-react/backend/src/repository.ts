@@ -22,7 +22,9 @@ export const synonymRepository = {
         return fullSetOfSynonyms
     },
     get: (word: string) => {
-        return store.get(word.toLowerCase())
+        const fullSet = store.get(word.toLowerCase())
+
+        return fullSet ? Array.from(fullSet).filter((wordInSet) => wordInSet !== word) : undefined
     },
     remove: (inputWord: string) => {
         // we don't want case sensitivity
