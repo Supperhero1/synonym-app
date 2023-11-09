@@ -1,6 +1,6 @@
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
 
-const SERVER_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : 'http://marko-petric.com'
+const SERVER_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : 'https://marko-petric.com'
 
 export const useApp = () => {
     const [ data, setData ] = useState<string[]>([])
