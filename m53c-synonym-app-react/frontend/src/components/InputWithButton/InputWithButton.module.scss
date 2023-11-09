@@ -9,7 +9,7 @@
       background-color: cornflowerblue;
       color: white;
       border: none;
-      border-radius: 0 5px 5px 0;
+      border-radius: 0 0.3rem 0.3rem 0;
       cursor: pointer;
       padding: 0.3rem;
       width: 100%;
@@ -23,5 +23,8 @@
   input {
     font-size: 1.2rem;
     text-align: center;
+    border-radius: 0.3rem 0 0 0.3rem;
+    border: none;
+    border-right: 1px solid black;
   }
 }
