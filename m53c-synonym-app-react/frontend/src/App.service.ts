@@ -25,8 +25,8 @@ export const useApp = () => {
     const sendNewSynonym = useCallback(async () => {
         try {
             const body = JSON.stringify({
-                originalWord: wordToCheck,
-                synonym
+                originalWord: wordToCheck.trim(),
+                synonym: synonym.trim()
             })
 
             if(synonym) {

@@ -21,6 +21,7 @@ function App({ forceConsistency = false }) {
                     value={service.wordToCheck}
                     setValue={service.inputHandler}
                     onClick={service.fetchData}
+                    placeholder={'enter word to check'}
                     id={'button1'}
                 />
                 <InputWithButton
@@ -28,6 +29,7 @@ function App({ forceConsistency = false }) {
                     value={service.synonym}
                     setValue={service.synonymInputHandler}
                     onClick={service.sendNewSynonym}
+                    placeholder={'enter a synonym'}
                     id={'button2'}
                 />
                 {
