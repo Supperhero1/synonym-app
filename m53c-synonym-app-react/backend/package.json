@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "npm run test-unit && npm run test-integration",
     "test-unit": "jest",
     "test-integration": "jest --config=./integrationTests/jest.config.ts",
-    "start": "ts-node src/index.ts"
+    "start": "ts-node src/index.ts",
+    "build": "tsc"
   },
   "author": "",
   "license": "ISC",

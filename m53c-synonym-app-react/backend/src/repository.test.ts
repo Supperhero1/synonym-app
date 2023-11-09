@@ -1,6 +1,7 @@
 import store from "@/store";
 import {synonymRepository} from "@/repository";
 import { Chance } from 'chance'
+import validateAddSynonym from "@/validation/validateAddSynonym";
 
 describe('Test CRUD operations', () => {
     const chance = new Chance()
@@ -31,13 +32,13 @@ describe('Test CRUD operations', () => {
     it('should throw and error when the user tries to input a string with whitespace', () => {
         let error: Error | undefined
         try {
-            synonymRepository.add([chance.word(), chance.word()].join(' '), chance.word())
+            validateAddSynonym({ originalWord: [chance.word(), chance.word()].join(' '), synonym: chance.word() })
         } catch(e) {
             error = e
         }
 
         expect(error).toBeTruthy()
-        expect(error.message).toStrictEqual('single words only')
+        expect(error.message).toStrictEqual('Only single words can be added. No whitespace.')
     })
 
     it('should throw and error when the user tries to input a synonym pair that has already been added', () => {
@@ -46,7 +47,7 @@ describe('Test CRUD operations', () => {
         const secondWord = chance.word()
         synonymRepository.add(firstWord, secondWord)
         try {
-            synonymRepository.add(secondWord, firstWord)
+            validateAddSynonym({ originalWord: firstWord, synonym: secondWord })
         } catch(e) {
             error = e
         }

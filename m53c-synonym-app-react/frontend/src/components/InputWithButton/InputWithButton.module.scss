@@ -2,18 +2,22 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   width: 25rem;
+  max-width: 90vw;
   margin: 0.3rem;
-  button {
-    background-color: cornflowerblue;
-    color: white;
-    border: none;
-    border-radius: 0 5px 5px 0;
-    cursor: pointer;
-    padding: 0.3rem;
-    font-size: 1.2rem;
-    &:hover {
-      background-color: darkblue;
-      font-weight: 700;
+  label {
+    button {
+      background-color: cornflowerblue;
+      color: white;
+      border: none;
+      border-radius: 0 5px 5px 0;
+      cursor: pointer;
+      padding: 0.3rem;
+      width: 100%;
+      font-size: 1.2rem;
+      &:hover {
+        background-color: darkblue;
+        font-weight: 700;
+      }
     }
   }
   input {

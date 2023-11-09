@@ -2,6 +2,9 @@ import express from 'express'
 import { synonymRepository } from "./repository";
 import cors from "cors"
 import environment from "../config/environment";
+import validateAddSynonym from "./validation/validateAddSynonym";
+import validateDeleteSynonym from "./validation/validateDeleteSynonym";
+import validateGetSynonym from "./validation/validateGetSynonym";
 
 const app = express()
 
@@ -10,7 +13,7 @@ app.use(cors({
         const allowedOrigins = environment.ALLOWED_ORIGINS.split(" ");
         if (origin && allowedOrigins.indexOf(origin) !== -1) {
             callback(null, true);
-        } else if(!origin && environment.isTest) {
+        } else if(!origin) {
             callback(null, true);
         } else {
             callback(new Error("Request from unauthorized origin"));
@@ -19,45 +22,57 @@ app.use(cors({
 }))
 
 app.get('/api/synonyms', (req, res) => {
-    const word = req.query.word
-    if(!word) {
-        res.status(400)
-        res.send('Invalid query')
-    }
+    // we're using 400 status for all validation errors and 500 for all unknown errors. A more complete implementation
+    // would have the status as a property of the error which would allow us to be more explicit with what we return,
+    // but that isn't really needed for a demo app.
+    try {
+        validateGetSynonym(req.query)
+        const word = req.query.word
 
-    const value = synonymRepository.get(word as string)
-    res.send(JSON.stringify(value ? Array.from(value) : null))
+        try {
+            const value = synonymRepository.get(word)
+            res.send(JSON.stringify(value ? Array.from(value) : null))
+        } catch (error) {
+            console.error(`Error fetching synonym: ${error.stack || error}`)
+            res.status(500).send(`Internal server error: ${error.message}`)
+        }
+    } catch(error) {
+        res.status(400).send(error.message)
+    }
 })
 
 app.post('/api/synonyms', express.json(),(req, res) => {
-    const payload = req.body as { originalWord: string, synonym: string }
-    // TODO: validate structure
+    const payload = req.body
     try {
-        const synonyms = synonymRepository.add(payload.originalWord, payload.synonym)
+        validateAddSynonym(payload)
+        try {
+            const synonyms = synonymRepository.add(payload.originalWord, payload.synonym)
 
-        res.send(JSON.stringify(Array.from(synonyms)))
+            res.send(JSON.stringify(Array.from(synonyms)))
+        } catch (error) {
+            console.error(`Error adding synonym: ${error.stack || error}`)
+            res.status(500).send(`Internal server error: ${error.message}`)
+        }
     } catch (error) {
-        console.log(`Error adding synonym: ${error}`)
-        res.status(400).send(`Bad request: ${error.message}`)
+        res.status(400).send(error.message)
     }
 })
 
 app.delete('/api/synonyms', (req, res) => {
-    const word = req.query.word
-    if(!word) {
-        res.status(400)
-        res.send('Invalid query')
-    }
-
     try {
-        synonymRepository.remove(word as string)
+        validateDeleteSynonym(req.query)
+        const word = req.query.word
+
+        try {
+            synonymRepository.remove(word)
+            res.send('OK')
+        } catch (error) {
+            console.error(`Error occurred while deleting the word ${word} from the synonyms map: ${error}`)
+            res.status(500).send(error.message)
+        }
     } catch (error) {
-        console.error(`Error occurred while deleting the word ${word} from the synonyms map: ${error}`)
-        // we'd do some better error handling if we were doing a more serious application but for the purposes of this app
-        // we're simply assuming the error is a user error.
         res.status(400).send(error.message)
     }
-    res.send('OK')
 })
 
 export default app

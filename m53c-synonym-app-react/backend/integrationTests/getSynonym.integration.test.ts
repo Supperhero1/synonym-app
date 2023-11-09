@@ -9,34 +9,34 @@ describe('server should correctly handle queries for synonyms', () => {
         chance.word({ length: 10 })
     ]
     beforeAll(async () => {
-        await fetch('http://localhost:4002/synonyms', {
+        await fetch('http://localhost:4002/api/synonyms', {
             body: JSON.stringify({
                 originalWord: wordsToTest[0],
                 synonym: wordsToTest[1]
             }),
             method: 'POST',
-            headers: new Headers({'content-type': 'application/json'}),
+            headers: new Headers({'content-type': 'application/json'}) as HeadersInit,
         })
-        await fetch('http://localhost:4002/synonyms', {
+        await fetch('http://localhost:4002/api/synonyms', {
             body: JSON.stringify({
                 originalWord: wordsToTest[0],
                 synonym: wordsToTest[2]
             }),
             method: 'POST',
-            headers: new Headers({'content-type': 'application/json'}),
+            headers: new Headers({'content-type': 'application/json'}) as HeadersInit,
         })
-        await fetch('http://localhost:4002/synonyms', {
+        await fetch('http://localhost:4002/api/synonyms', {
             body: JSON.stringify({
                 originalWord: wordsToTest[0],
                 synonym: wordsToTest[3]
             }),
             method: 'POST',
-            headers: new Headers({'content-type': 'application/json'}),
+            headers: new Headers({'content-type': 'application/json'}) as HeadersInit,
         })
     })
 
     it('should correctly return a synonym set', async () => {
-        const response = await fetch(`http://localhost:4002/synonyms?word=${wordsToTest[0]}`)
+        const response = await fetch(`http://localhost:4002/api/synonyms?word=${wordsToTest[0]}`)
 
         expect(response.status).toStrictEqual(200)
 

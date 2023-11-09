@@ -8,25 +8,27 @@ import FlavorMessage from "./components/FlavorMessage/FlavorMessage";
 import Footer from "./components/Footer/Footer"
 import { useApp } from "./App.service";
 
-function App() {
+function App({ forceConsistency = false }) {
     const service = useApp()
 
     return (
         <>
             <main className={styles.App}>
                 <h1>THE SYNONYM APP</h1>
-                <FlavorMessage dependency={service.wordToDisplay}/>
+                <FlavorMessage dependency={service.wordToDisplay} forceConsistency={forceConsistency}/>
                 <InputWithButton
                     buttonText={'Get synonyms'}
                     value={service.wordToCheck}
                     setValue={service.inputHandler}
                     onClick={service.fetchData}
+                    id={'button1'}
                 />
                 <InputWithButton
                     buttonText={'Set new synonym'}
                     value={service.synonym}
                     setValue={service.synonymInputHandler}
                     onClick={service.sendNewSynonym}
+                    id={'button2'}
                 />
                 {
                     service.wordToDisplay

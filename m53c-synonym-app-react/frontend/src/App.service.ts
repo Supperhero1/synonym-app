@@ -1,6 +1,6 @@
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
 
-const SERVER_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : 'https://marko-petric.com'
+const SERVER_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : 'http://marko-petric.com'
 
 export const useApp = () => {
     const [ data, setData ] = useState<string[]>([])
@@ -30,14 +30,19 @@ export const useApp = () => {
             })
 
             if(synonym) {
-                await fetch(`${SERVER_URL}/api/synonyms`, {
+                const result = await fetch(`${SERVER_URL}/api/synonyms`, {
                     body,
                     method: 'POST',
                     headers: new Headers({ 'content-type': 'application/json' }),
                 })
+                if(result.status === 400) {
+                    const errorMessage = await result.text()
+                    setError(errorMessage)
+                } else {
+                    setError(undefined)
+                    await fetchData()
+                }
             }
-            setError(undefined)
-            await fetchData()
         } catch(error: any) {
             console.error(error.stack || error)
             setError('An error has occurred while sending the synonym pair to the server. Please try again later.')
